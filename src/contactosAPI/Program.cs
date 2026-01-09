@@ -1,18 +1,35 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "Contactos API",
+        Version = "v1",
+        Description = "API para gestión de contactos"
+    });
+});
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
+// if (app.Environment.IsDevelopment())
+// {
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Contactos API v1");
+        c.RoutePrefix = "swagger"; // Swagger UI en /swagger/index.html
+    });
+// }
 
-app.UseHttpsRedirection();
+// Solo usar HTTPS redirection si no estamos en Docker/Production sin HTTPS
+// if (app.Environment.IsDevelopment())
+// {
+    app.UseHttpsRedirection();
+// }
 
 var summaries = new[]
 {
