@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
 
 env:
-  IMAGE_BASE_NAME: jordan/contactosapi
+  IMAGE_BASE_NAME: jordanj9/contactosapi
 
 jobs:
   API_Image:
